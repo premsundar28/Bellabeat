@@ -80,3 +80,54 @@ A description of all data sources used, including the specific datasets selected
 *   **weightLogInfo_merged.csv:** Tracks weight in kilograms and pounds, BMI, and whether the entry was a manual report.
 *   **Source Summary:** The primary data source is the FitBit Fitness Tracker Data (2016), consisting of 18 CSV files detailing the daily habits of 30+ Fitbit users.
 
+---
+
+## Phase 3: Process
+
+### 3.1 Tools Chosen
+For this analysis, I am using **Python** (specifically libraries like **Pandas**, **NumPy**, and **Matplotlib/Seaborn**) within a Jupyter Notebook environment (`EDA.ipynb`). 
+*   **Why?** Python is highly efficient for handling large datasets, performing complex transformations, and creating reproducible data cleaning scripts. Jupyter Notebooks allow for a clear, step-by-step documentation of the process.
+
+### 3.2 Initial Data Profiling Findings (Daily Activity)
+A preliminary profile of the `dailyActivity_merged.csv` dataset revealed the following insights regarding data quality and relationships:
+
+*   **High Correlations:**
+    *   **Calories** is highly correlated with `TotalSteps`, `TotalDistance`, `TrackerDistance`, and `VeryActiveMinutes`.
+    *   **Activity Intensities:** `FairlyActiveMinutes` and `ModeratelyActiveDistance` are strongly linked, as are `LightlyActiveMinutes` and `LightActiveDistance`.
+    *   **Distance Metrics:** `TotalDistance` and `TrackerDistance` show near-perfect correlation with `TotalSteps`.
+
+*   **Data Quality Observations (Zero Values):**
+    *   **TotalSteps/Distance:** Approximately **8.2-8.3%** of entries are zeros, likely representing days the tracker was not worn.
+    *   **LoggedActivitiesDistance:** **96.6%** zeros, suggesting that very few users manually log their distance-based activities.
+    *   **SedentaryActiveDistance:** **91.3%** zeros.
+    *   **High Intensity Activity:** `VeryActiveMinutes` (**43.5%**) and `FairlyActiveMinutes` (**40.9%**) have a significant number of zero values, indicating many users have days without high-intensity exercise.
+
+*   **Distribution:** `ActivityDate` is uniformly distributed, confirming a consistent period of data collection.
+
+### 3.3 Guiding Questions & Answers
+
+*   **Have you ensured your data’s integrity?**
+    Yes. I checked for unique user counts to ensure consistency with the dataset description and verified that all data falls within the expected 2016 timeframe.
+*   **What steps have you taken to ensure that your data is clean?**
+    1.  **Duplicate Removal:** Identified and removed duplicate rows (especially in sleep data).
+    2.  **Formatting:** Converted date/time strings into proper `datetime` objects.
+    3.  **Naming:** Standardized column names to `snake_case` or `PascalCase` for consistency across all merged tables.
+    4.  **Handling Nulls:** Identified columns with missing data (like 'Fat' in weight logs) and decided whether to drop them or fill them based on their impact.
+*   **How can you verify that your data is clean and ready to analyze?**
+    I used summary statistics (`df.describe()`) to check for outliers and confirmed that the count of unique IDs remains consistent across related datasets after cleaning.
+*   **Have you documented your cleaning process?**
+    Yes, all cleaning steps are documented both in this README and through code comments in my Jupyter Notebook.
+
+### 3.3 Key Tasks
+1.  **Check for errors:** Found and removed duplicates in the sleep dataset.
+2.  **Choose tools:** Set up a Python environment with necessary data science libraries.
+3.  **Transform data:** Merged daily activity and sleep datasets into a single dataframe for correlation analysis.
+4.  **Document process:** Maintained a record of all transformations performed.
+
+### 3.4 Deliverable
+Documentation of any cleaning or manipulation of data:
+*   Initial cleaning performed in `EDA.ipynb`.
+*   Combined `dailyActivity` and `sleepDay` datasets on `Id` and `Date`.
+*   Standardized date formats across all CSVs to `YYYY-MM-DD`.
+*   Removed 3 duplicate entries from the `sleepDay_merged.csv` file.
+
