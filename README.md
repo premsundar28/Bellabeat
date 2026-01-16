@@ -104,7 +104,13 @@ A preliminary profile of the `dailyActivity_merged.csv` dataset revealed the fol
 
 *   **Distribution:** `ActivityDate` is uniformly distributed, confirming a consistent period of data collection.
 
-### 3.3 Guiding Questions & Answers
+### 3.3 Visual Verification
+I generated histograms to visualize the distribution of key activity metrics:
+![Distribution of Daily Activity Metrics](images/distribution_histograms.png)
+*   **Steps & Distance:** Both show a slightly right-skewed distribution, consistent with the finding that some days have zero activity (8%+ zeros).
+*   **Calories:** Shows a more normal distribution, centered around the 2000-2500 range.
+
+### 3.4 Guiding Questions & Answers
 
 *   **Have you ensured your data’s integrity?**
     Yes. I checked for unique user counts to ensure consistency with the dataset description and verified that all data falls within the expected 2016 timeframe.
