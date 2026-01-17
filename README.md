@@ -84,56 +84,41 @@ A description of all data sources used, including the specific datasets selected
 
 ## Phase 3: Process
 
-### 3.1 Tools Chosen
-For this analysis, I am using **Python** (specifically libraries like **Pandas**, **NumPy**, and **Matplotlib/Seaborn**) within a Jupyter Notebook environment (`EDA.ipynb`). 
-*   **Why?** Python is highly efficient for handling large datasets, performing complex transformations, and creating reproducible data cleaning scripts. Jupyter Notebooks allow for a clear, step-by-step documentation of the process.
+### 3.1 Tools & Environment
+I utilized **Python** within **Jupyter Notebooks** for a reproducible and documented workflow.
+*   **Data Processing:** `Pandas` for merging 12 raw CSV files and `NumPy` for numerical validation.
+*   **Visual Analysis:** `Matplotlib` and `Seaborn` for identifying patterns and correlations.
 
-### 3.2 Initial Data Profiling Findings (Daily Activity)
-A preliminary profile of the `dailyActivity_merged.csv` dataset revealed the following insights regarding data quality and relationships:
+### 3.2 Cleaning & Transformation Pipeline
+I implemented a standardized pipeline to ensure data integrity:
+1.  **Data Consolidation:** Merged datasets from two time periods to create a single source of truth for each metric (Activity, Sleep, Weight).
+2.  **Naming Conventions:** Standardized all headers to `snake_case` (e.g., `TotalSteps` -> `total_steps`) for consistency.
+3.  **Temporal Consistency:** Converted date strings into `datetime` objects, enabling time-series analysis.
+4.  **Deduplication:** Verified and removed redundant records (e.g., handling duplicates in `sleepDay`).
+5.  **Quality Check:** Identified that ~8.2% of total records contained zero steps, which I categorized as "non-wear days".
 
-*   **High Correlations:**
-    *   **Calories** is highly correlated with `TotalSteps`, `TotalDistance`, `TrackerDistance`, and `VeryActiveMinutes`.
-    *   **Activity Intensities:** `FairlyActiveMinutes` and `ModeratelyActiveDistance` are strongly linked, as are `LightlyActiveMinutes` and `LightActiveDistance`.
-    *   **Distance Metrics:** `TotalDistance` and `TrackerDistance` show near-perfect correlation with `TotalSteps`.
+### 3.3 Visual Analysis & Interpretations
 
-*   **Data Quality Observations (Zero Values):**
-    *   **TotalSteps/Distance:** Approximately **8.2-8.3%** of entries are zeros, likely representing days the tracker was not worn.
-    *   **LoggedActivitiesDistance:** **96.6%** zeros, suggesting that very few users manually log their distance-based activities.
-    *   **SedentaryActiveDistance:** **91.3%** zeros.
-    *   **High Intensity Activity:** `VeryActiveMinutes` (**43.5%**) and `FairlyActiveMinutes` (**40.9%**) have a significant number of zero values, indicating many users have days without high-intensity exercise.
-
-*   **Distribution:** `ActivityDate` is uniformly distributed, confirming a consistent period of data collection.
-
-### 3.3 Visual Verification
-I generated histograms to visualize the distribution of key activity metrics:
+#### A. Distribution of Core Metrics
 ![Distribution of Daily Activity Metrics](images/distribution_histograms.png)
-*   **Steps & Distance:** Both show a slightly right-skewed distribution, consistent with the finding that some days have zero activity (8%+ zeros).
-*   **Calories:** Shows a more normal distribution, centered around the 2000-2500 range.
+*   **Interpretation:** The **Total Steps** and **Distance** histograms show a right-skewed distribution with a significant peak at zero. This confirms "non-wear" days where the tracker was likely not used. **Calories** follows a near-normal distribution, indicating most users burn between 1,800 and 2,800 kcal daily.
 
-### 3.4 Guiding Questions & Answers
+#### B. Correlation Analysis
+![Correlation Heatmap](images/correlation_heatmap.png)
+*   **Interpretation:** 
+    *   **High Impact:** A near-perfect correlation (0.98) exists between **Total Steps** and **Total Distance**.
+    *   **Calorie Burn:** **Very Active Minutes** and **Total Steps** show the strongest positive correlation with calories burned, highlighting these as key metrics for weight management features.
+    *   **Sedentary Insight:** **Sedentary Minutes** has a weak negative correlation with calories, suggesting that simply reducing inactivity is a vital "nudge" for user health.
 
-*   **Have you ensured your data’s integrity?**
-    Yes. I checked for unique user counts to ensure consistency with the dataset description and verified that all data falls within the expected 2016 timeframe.
-*   **What steps have you taken to ensure that your data is clean?**
-    1.  **Duplicate Removal:** Identified and removed duplicate rows (especially in sleep data).
-    2.  **Formatting:** Converted date/time strings into proper `datetime` objects.
-    3.  **Naming:** Standardized column names to `snake_case` or `PascalCase` for consistency across all merged tables.
-    4.  **Handling Nulls:** Identified columns with missing data (like 'Fat' in weight logs) and decided whether to drop them or fill them based on their impact.
-*   **How can you verify that your data is clean and ready to analyze?**
-    I used summary statistics (`df.describe()`) to check for outliers and confirmed that the count of unique IDs remains consistent across related datasets after cleaning.
-*   **Have you documented your cleaning process?**
-    Yes, all cleaning steps are documented both in this README and through code comments in my Jupyter Notebook.
+### 3.4 Process Validation (Guiding Questions)
+*   **Tools Choice:** Python was chosen for its efficiency in merging millions of rows (especially heart rate data) and its superior visualization capabilities.
+*   **Data Integrity:** Verified that unique user counts (33 users) remained consistent across merged activity files.
+*   **Cleaning Documentation:** All steps—from header standardization to duplicate handling—are documented in the `EDA.ipynb` notebook.
+*   **Verification:** Used `df.info()` and summary statistics to ensure structural integrity and absence of nulls in key analytical columns.
 
-### 3.3 Key Tasks
-1.  **Check for errors:** Found and removed duplicates in the sleep dataset.
-2.  **Choose tools:** Set up a Python environment with necessary data science libraries.
-3.  **Transform data:** Merged daily activity and sleep datasets into a single dataframe for correlation analysis.
-4.  **Document process:** Maintained a record of all transformations performed.
-
-### 3.4 Deliverable
-Documentation of any cleaning or manipulation of data:
-*   Initial cleaning performed in `EDA.ipynb`.
-*   Combined `dailyActivity` and `sleepDay` datasets on `Id` and `Date`.
-*   Standardized date formats across all CSVs to `YYYY-MM-DD`.
-*   Removed 3 duplicate entries from the `sleepDay_merged.csv` file.
+### 3.5 Phase 3 Deliverable
+**Processed Data Summary:**
+*   **Consolidation:** 12 raw CSVs merged into 6 master DataFrames.
+*   **Formatting:** Applied `snake_case` headers and parsed all date-time strings.
+*   **Validation:** 0 duplicates in `dailyActivity`; identified non-wear patterns (8.2% zeros).
 
