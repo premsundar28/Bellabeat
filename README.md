@@ -242,5 +242,15 @@ Based on the data, I propose the following strategies for the Bellabeat marketin
 2.  **Consistency > Intensity:** Building the habit of wearing the device daily is the first hurdle to retention.
 3.  **Automation is King:** Any feature requiring manual input will likely fail; prioritize smart, sensor-based tracking.
 
+---
+
+## Bonus: Portfolio Entry
+
+**Title:** Bellabeat Data Analysis: Unlocking Growth via Consumer Behavior Insights
+
+**Summary:**
+In this case study, I acted as a data analyst for Bellabeat, a high-tech wellness company for women, to identify smart device usage trends that could inform their marketing strategy. Using **Python (Pandas, Matplotlib)**, I cleaned and analyzed data from 30+ Fitbit users to understand daily habits. My analysis revealed a significant "consistency gap"—users often skip wearing devices and rely heavily on automated tracking over manual inputs. Additionally, I found that even active users spend ~16 hours a day sedentary. Based on these insights, I recommended a strategic pivot: Bellabeat should market its devices as "wellness guardians" that actively nudge users to break sedentary cycles and emphasize their superior *automated* tracking capabilities to lower the barrier for user engagement.
+
+
 
 
