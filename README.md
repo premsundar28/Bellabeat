@@ -122,3 +122,47 @@ I implemented a standardized pipeline to ensure data integrity:
 *   **Formatting:** Applied `snake_case` headers and parsed all date-time strings.
 *   **Validation:** 0 duplicates in `dailyActivity`; identified non-wear patterns (8.2% zeros).
 
+---
+
+## Phase 4: Analyze
+
+### 4.1 Data Organization & Formatting
+To perform this analysis, I organized the data into a consolidated schema where the `dailyActivity` dataframe served as the central table.
+*   **Aggregated View:** Data is aggregated by `id` and `activity_date` to provide a daily snapshot of user behavior.
+*   **Formatting:** All datasets have been standardized to use `snake_case` column names and `datetime` objects for date fields, ensuring seamless joining and time-series plotting.
+
+### 4.2 Key Discoveries & Surprises
+*   **Sedentary Dominance:** Users spend a significant portion of their day sedentary (avg. ~990 minutes/day). Even active users often have high sedentary time, suggesting a "weekend warrior" or "gym-only" active profile rather than consistent movement.
+*   **Non-Wear Days:** Approximately 8.2% of days have zero steps, indicating users often take the device off for extended periods or forget to charge/wear it.
+*   **Lack of Manual Logging:** 96.6% of distance records are automated, meaning users rely almost entirely on the device's auto-detection. Features requiring manual input (like water or weight logging) may have low engagement.
+
+### 4.3 Trends & Relationships
+My analysis highlighted several critical relationships:
+*   **Activity vs. Calories:** There is a strong positive correlation between `total_steps` / `very_active_minutes` and `calories`. High-intensity activity is the most efficient driver of calorie burn.
+*   **Sedentary Impact:** There is a negative correlation between sedentary minutes and calorie burn. Reducing sedentary time—even without intense exercise—positively impacts daily energy expenditure.
+*   **Consistency:** The "non-wear" days suggest a gap in habit formation. Users who track consistently likely see better results, but the device needs to encourage daily wear.
+
+### 4.4 Business Insights (Answering the Questions)
+*   **Focus on Consistency:** Since non-wear days are common, Bellabeat could introduce "streak" features or battery reminders to encourage 24/7 wear.
+*   **Nudge Inactivity:** Given the high sedentary time, the Bellabeat app can benefit from "inactivity alerts" or "movement breaks" to break up long periods of sitting, independent of scheduled workouts.
+*   **Automate Everything:** The lack of manual logging suggests that Bellabeat's "Spring" bottle (smart tracking) is a better product strategy than relying on users to manually log water intake in the app.
+
+### 4.5 Guiding Questions & Answers
+*   **How should you organize your data to perform analysis on it?**
+    Data should be organized in a long format, aggregated by user and day, to allow for trend analysis over time.
+*   **Has your data been properly formatted?**
+    Yes, verified in Phase 3 with standard naming and date types.
+*   **What surprises did you discover in the data?**
+    The extremely high percentage of sedentary minutes and the significant number of days with zero activity (non-wear).
+*   **What trends or relationships did you find in the data?**
+    Steps and very active minutes are the strongest predictors of calorie burn; sedentary time is negatively correlated with health metrics.
+*   **How will these insights help answer your business questions?**
+    They point directly to feature recommendations: automated tracking, inactivity nudges, and gamification of consistency.
+
+### 4.6 Deliverable
+**Summary of Analysis:**
+*   Identified that sedentary time is the dominant user state.
+*   Confirmed that high intensity and step count are the primary drivers of calorie expenditure.
+*   Uncovered a "consistency gap" with ~8% non-wear days.
+*   Concluded that automated tracking is superior to manual logging for this user base.
+
